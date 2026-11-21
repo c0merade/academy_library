@@ -9,6 +9,7 @@ const dbPath = process.env.DB_PATH
 
 fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 export const db = new DatabaseSync(dbPath);
+export let hasFts5 = false;
 
 // Enable foreign keys and WAL mode for reliability
 db.exec(`
@@ -55,18 +56,6 @@ export function initDatabase() {
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 
-    -- SQLite FTS5 virtual table for fast full-text search
-    CREATE VIRTUAL TABLE IF NOT EXISTS resources_fts USING fts5(
-      title,
-      description,
-      author,
-      course,
-      topic,
-      tags,
-      content='resources',
-      content_rowid='id'
-    );
-
     CREATE TABLE IF NOT EXISTS collections (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT NOT NULL,
@@ -95,6 +84,26 @@ export function initDatabase() {
     CREATE INDEX IF NOT EXISTS idx_collection_items_resource ON collection_items(resource_id);
   `);
 
+  // Enable SQLite FTS5 when compiled into the runtime; otherwise fall back gracefully
+  try {
+    db.exec(`
+      CREATE VIRTUAL TABLE IF NOT EXISTS resources_fts USING fts5(
+        title,
+        description,
+        author,
+        course,
+        topic,
+        tags,
+        content='resources',
+        content_rowid='id'
+      );
+    `);
+    hasFts5 = true;
+  } catch {
+    hasFts5 = false;
+    console.warn('SQLite FTS5 module not available in this Node build; using SQL LIKE full-text search fallback.');
+  }
+
   // Seed initial demo data if database is empty
   const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get() as { count: number };
   if (userCount.count === 0) {
@@ -103,6 +112,8 @@ export function initDatabase() {
 }
 
 export function syncResourceFts(resourceId: number) {
+  if (!hasFts5) return;
+
   const row = db
     .prepare('SELECT id, title, description, author, course, topic, tags FROM resources WHERE id = ?')
     .get(resourceId) as
@@ -136,6 +147,7 @@ export function syncResourceFts(resourceId: number) {
 }
 
 export function rebuildFtsIndex() {
+  if (!hasFts5) return;
   db.exec(`INSERT INTO resources_fts(resources_fts) VALUES('rebuild');`);
 }
 

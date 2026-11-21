@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { db, parseResource, syncResourceFts } from '../db.ts';
+import { db, hasFts5, parseResource, syncResourceFts } from '../db.ts';
 import { canModifyOwnedItem, requireRole } from '../auth.ts';
 import type { ResourceFacets } from '../../src/types.ts';
 
@@ -94,12 +94,27 @@ resourcesRouter.get('/', (req, res) => {
   const ftsQuery = q ? buildFtsQuery(q) : null;
   let fromClause = 'FROM resources r';
   let orderClause = 'ORDER BY r.created_at DESC, r.id DESC';
+  let activeSearchMode: 'fts5' | 'browse' = 'browse';
 
-  if (ftsQuery) {
+  if (ftsQuery && hasFts5) {
     fromClause = 'FROM resources r JOIN resources_fts fts ON r.id = fts.rowid';
     whereClauses.push('resources_fts MATCH ?');
     params.push(ftsQuery);
     orderClause = 'ORDER BY bm25(resources_fts) ASC, r.id DESC';
+    activeSearchMode = 'fts5';
+  } else if (q) {
+    const tokens = q
+      .toLowerCase()
+      .split(/\s+/)
+      .filter((t) => t.length > 0);
+    for (const token of tokens) {
+      const pattern = `%${token}%`;
+      whereClauses.push(
+        '(LOWER(r.title) LIKE ? OR LOWER(r.description) LIKE ? OR LOWER(r.author) LIKE ? OR LOWER(r.course) LIKE ? OR LOWER(r.topic) LIKE ? OR LOWER(r.tags) LIKE ?)'
+      );
+      params.push(pattern, pattern, pattern, pattern, pattern, pattern);
+    }
+    if (tokens.length > 0) activeSearchMode = 'fts5';
   }
 
   if (course) {
@@ -139,7 +154,7 @@ resourcesRouter.get('/', (req, res) => {
     resources,
     total: resources.length,
     facets: getFacets(),
-    searchMode: ftsQuery ? 'fts5' : 'browse',
+    searchMode: activeSearchMode,
   });
 });
 
@@ -343,10 +358,12 @@ resourcesRouter.delete('/:id', requireRole('lecturer', 'admin'), (req, res) => {
   }
 
   // Remove from FTS5 before deleting from main table
-  db.prepare(
-    `INSERT INTO resources_fts(resources_fts, rowid, title, description, author, course, topic, tags)
-     VALUES ('delete', ?, '', '', '', '', '', '')`
-  ).run(id);
+  if (hasFts5) {
+    db.prepare(
+      `INSERT INTO resources_fts(resources_fts, rowid, title, description, author, course, topic, tags)
+       VALUES ('delete', ?, '', '', '', '', '', '')`
+    ).run(id);
+  }
   db.prepare('DELETE FROM resources WHERE id = ?').run(id);
   invalidateFacetsCache();
 
