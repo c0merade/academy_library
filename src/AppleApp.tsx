@@ -522,17 +522,54 @@ export default function AppleApp() {
             </button>
           </div>
         </div>
+
+        {/* Mobile Compact Top Tab Strip (avoids Netlify badge & mobile browser bottom bar) */}
+        <nav
+          aria-label="Mobile Navigation"
+          className="md:hidden border-t border-black/[0.05] dark:border-white/[0.07] px-2 py-1.5"
+        >
+          <div className="grid grid-cols-4 gap-1">
+            {(
+              [
+                { id: 'catalogue', label: t.nav.catalogue, icon: Library },
+                { id: 'collections', label: t.nav.collections, icon: FolderKanban },
+                { id: 'skill-map', label: t.nav.skillMap, icon: Compass },
+                { id: 'depot', label: t.nav.depot, icon: Building2 },
+              ] as const
+            ).map(({ id, label, icon: Icon }) => {
+              const isActive = activeTab === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => {
+                    setActiveTab(id);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className={`flex flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 text-[10px] font-medium transition cursor-pointer ${
+                    isActive
+                      ? 'bg-[#1D1D1F] text-white dark:bg-[#F5F5F7] dark:text-[#0A0A0C] shadow-2xs'
+                      : 'text-[#6E6E73] dark:text-[#98989D]'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span className="truncate max-w-[78px]">{label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </nav>
       </header>
 
-      {/* Toast (lifted above mobile Bottom Tab Bar) */}
+      {/* Toast */}
       {toast && (
-        <div className="fixed bottom-20 md:bottom-6 left-1/2 z-50 -translate-x-1/2 flex max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full bg-[#1D1D1F] px-4 py-2.5 text-xs font-medium text-white shadow-xl animate-fade-up">
+        <div className="fixed bottom-16 sm:bottom-6 left-1/2 z-50 -translate-x-1/2 flex max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full bg-[#1D1D1F] px-4 py-2.5 text-xs font-medium text-white shadow-xl animate-fade-up">
           <CheckCircle2 className="h-4 w-4 shrink-0 text-[#34C759]" />
           <span className="truncate">{toast}</span>
         </div>
       )}
 
-      <main className="relative z-10 mx-auto max-w-[1400px] px-4 pt-6 pb-24 sm:px-10 sm:py-10 md:pb-12">
+      <main className="relative z-10 mx-auto max-w-[1400px] px-4 pt-6 pb-16 sm:px-10 sm:py-10">
         {/* CATALOGUE TAB */}
         {activeTab === 'catalogue' && (
           <div className="space-y-10 animate-fade-up">
@@ -1355,43 +1392,6 @@ export default function AppleApp() {
           </div>
         )}
       </main>
-
-      {/* Native iOS-Style Bottom Tab Bar for Mobile (< 768px) */}
-      <nav
-        aria-label="Mobile Navigation"
-        className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-black/[0.08] dark:border-white/[0.1] bg-white/85 dark:bg-[#161618]/90 backdrop-blur-2xl pb-[env(safe-area-inset-bottom)]"
-      >
-        <div className="grid grid-cols-4 px-2 py-1.5">
-          {(
-            [
-              { id: 'catalogue', label: t.nav.catalogue, icon: Library },
-              { id: 'collections', label: t.nav.collections, icon: FolderKanban },
-              { id: 'skill-map', label: t.nav.skillMap, icon: Compass },
-              { id: 'depot', label: t.nav.depot, icon: Building2 },
-            ] as const
-          ).map(({ id, label, icon: Icon }) => {
-            const isActive = activeTab === id;
-            return (
-              <button
-                key={id}
-                type="button"
-                onClick={() => {
-                  setActiveTab(id);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className={`flex flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 text-[10px] font-medium transition cursor-pointer ${
-                  isActive
-                    ? 'text-[#0071E3] dark:text-[#0A84FF]'
-                    : 'text-[#86868B] dark:text-[#98989D]'
-                }`}
-              >
-                <Icon className={`h-5 w-5 ${isActive ? 'stroke-[2.3]' : 'stroke-[1.8]'}`} />
-                <span className="truncate max-w-[78px]">{label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </nav>
 
       {modalOpen && (
         <Suspense fallback={null}>
