@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: picsart-academy-library-api
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.15.0
+      - key: CORS_ORIGIN
+        value: "*"
