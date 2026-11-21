@@ -2,7 +2,14 @@
   command = "npm run build"
   publish = "dist"
 
-# SPA fallback so all routes serve index.html
+# Proxy all /api/* requests directly to the Render backend
+[[redirects]]
+  from = "/api/*"
+  to = "https://academy-library.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# SPA fallback so all frontend routes serve index.html
 [[redirects]]
   from = "/*"
   to = "/index.html"
