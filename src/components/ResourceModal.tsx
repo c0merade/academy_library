@@ -126,11 +126,11 @@ export function ResourceModal({ userId, lang, initial, onClose, onSaved }: Resou
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden overscroll-none bg-black/70 p-4 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center overflow-hidden overscroll-none bg-black/70 p-0 sm:p-4 backdrop-blur-xs"
     >
-      <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto overscroll-contain rounded-3xl bg-white dark:bg-[#14141D] text-slate-900 dark:text-[#F3F4F6] shadow-2xl border border-slate-200 dark:border-white/10">
-        <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/10 px-6 py-4">
-          <h2 className="font-display text-xl font-bold text-slate-900 dark:text-white">
+      <div className="w-full max-w-2xl max-h-[92dvh] overflow-y-auto overscroll-contain rounded-t-3xl sm:rounded-3xl bg-white dark:bg-[#14141D] text-slate-900 dark:text-[#F3F4F6] shadow-2xl border border-slate-200 dark:border-white/10 pb-[env(safe-area-inset-bottom)]">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 dark:border-white/10 bg-white/95 dark:bg-[#14141D]/95 backdrop-blur-md px-5 py-4 sm:px-6">
+          <h2 className="font-display text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
             {initial ? t.modal.editTitle : t.modal.addTitle}
           </h2>
           <button
@@ -142,7 +142,7 @@ export function ResourceModal({ userId, lang, initial, onClose, onSaved }: Resou
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 p-6">
+        <form onSubmit={handleSubmit} className="space-y-4 p-5 sm:p-6">
           <div className="flex items-start gap-2 rounded-2xl bg-[#64FCE5]/20 border border-[#64FCE5]/50 px-3.5 py-2.5 text-xs font-medium text-[#0B0B10] dark:text-[#64FCE5]">
             <ShieldCheck className="h-4 w-4 shrink-0 mt-0.5" />
             <span>{t.modal.legalNotice}</span>

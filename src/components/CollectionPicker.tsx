@@ -63,7 +63,7 @@ export function CollectionPicker({
       {open && (
         <div
           role="listbox"
-          className="absolute bottom-full right-0 mb-2 w-64 origin-bottom-right overflow-hidden rounded-2xl border border-black/[0.08] dark:border-white/[0.12] bg-white/95 dark:bg-[#1C1C1E]/95 p-1.5 text-left shadow-[0_18px_45px_rgba(0,0,0,0.18)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.7)] backdrop-blur-2xl z-50 animate-fade-up"
+          className="absolute bottom-full right-0 mb-2 w-64 max-w-[calc(100vw-2rem)] origin-bottom-right overflow-hidden rounded-2xl border border-black/[0.08] dark:border-white/[0.12] bg-white/95 dark:bg-[#1C1C1E]/95 p-1.5 text-left shadow-[0_18px_45px_rgba(0,0,0,0.18)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.7)] backdrop-blur-2xl z-50 animate-fade-up"
         >
           <div className="px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-[#86868B] dark:text-[#98989D]">
             {lang === 'hy' ? 'Ավելացնել հավաքածուում' : 'Add to Collection'}

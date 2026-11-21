@@ -7,6 +7,7 @@
     background-color: #f5f6fa;
     color: #121218;
     transition: background-color 0.2s ease, color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .dark body {
@@ -51,6 +52,14 @@
 
 .animate-fade-up {
   animation: fadeSlideUp 0.24s ease-out both;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @keyframes searchBorderFlow {

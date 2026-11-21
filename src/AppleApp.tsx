@@ -453,23 +453,25 @@ export default function AppleApp() {
       </div>
 
       {/* Apple-Style Frosted Glass Top Bar */}
-      <header className="sticky top-0 z-30 border-b border-black/[0.06] dark:border-white/[0.08] bg-white/75 dark:bg-[#161618]/80 backdrop-blur-2xl">
-        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-3 px-6 py-3 sm:px-10">
+      <header className="sticky top-0 z-30 border-b border-black/[0.06] dark:border-white/[0.08] bg-white/80 dark:bg-[#161618]/85 backdrop-blur-2xl">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-4 py-2.5 sm:px-10 sm:py-3">
           {/* Brand */}
           <button
             type="button"
             onClick={() => setActiveTab('catalogue')}
-            className="flex items-center gap-2.5 text-left cursor-pointer"
+            className="flex min-w-0 items-center gap-2 text-left cursor-pointer"
           >
             <MinimalLogo />
-            <span className="text-[15px] font-semibold tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">
+            <span className="truncate text-[14px] sm:text-[15px] font-semibold tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">
               Picsart Academy{' '}
-              <span className="font-normal text-[#6E6E73] dark:text-[#98989D]">{t.brandSub}</span>
+              <span className="hidden xs:inline font-normal text-[#6E6E73] dark:text-[#98989D]">
+                {t.brandSub}
+              </span>
             </span>
           </button>
 
-          {/* Centered Minimal Navigation */}
-          <nav className="flex items-center gap-1 text-[13px] font-medium">
+          {/* Desktop Centered Minimal Navigation (Mobile uses native Bottom Tab Bar) */}
+          <nav className="hidden md:flex items-center gap-1 text-[13px] font-medium">
             {(
               [
                 { id: 'catalogue', label: t.nav.catalogue },
@@ -494,7 +496,7 @@ export default function AppleApp() {
           </nav>
 
           {/* Right Utilities */}
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
             <UserMenu
               users={users}
               currentUser={currentUser}
@@ -505,7 +507,7 @@ export default function AppleApp() {
             <button
               type="button"
               onClick={() => setLang((prev) => (prev === 'hy' ? 'en' : 'hy'))}
-              className="rounded-full border border-black/[0.08] dark:border-white/[0.12] bg-[#F5F5F7] dark:bg-[#2C2C2E] px-3 py-1.5 text-xs font-medium text-[#1D1D1F] dark:text-[#F5F5F7] transition hover:bg-black/[0.06] dark:hover:bg-white/[0.14] cursor-pointer"
+              className="rounded-full border border-black/[0.08] dark:border-white/[0.12] bg-[#F5F5F7] dark:bg-[#2C2C2E] px-2.5 sm:px-3 py-1.5 text-xs font-medium text-[#1D1D1F] dark:text-[#F5F5F7] transition hover:bg-black/[0.06] dark:hover:bg-white/[0.14] cursor-pointer"
             >
               {lang === 'hy' ? 'EN' : 'ՀԱՅ'}
             </button>
@@ -522,33 +524,33 @@ export default function AppleApp() {
         </div>
       </header>
 
-      {/* Toast */}
+      {/* Toast (lifted above mobile Bottom Tab Bar) */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 flex items-center gap-2 rounded-full bg-[#1D1D1F] px-5 py-2.5 text-xs font-medium text-white shadow-xl animate-fade-up">
-          <CheckCircle2 className="h-4 w-4 text-[#34C759]" />
-          <span>{toast}</span>
+        <div className="fixed bottom-20 md:bottom-6 left-1/2 z-50 -translate-x-1/2 flex max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full bg-[#1D1D1F] px-4 py-2.5 text-xs font-medium text-white shadow-xl animate-fade-up">
+          <CheckCircle2 className="h-4 w-4 shrink-0 text-[#34C759]" />
+          <span className="truncate">{toast}</span>
         </div>
       )}
 
-      <main className="relative z-10 mx-auto max-w-[1400px] px-6 py-10 sm:px-10">
+      <main className="relative z-10 mx-auto max-w-[1400px] px-4 pt-6 pb-24 sm:px-10 sm:py-10 md:pb-12">
         {/* CATALOGUE TAB */}
         {activeTab === 'catalogue' && (
           <div className="space-y-10 animate-fade-up">
             {/* Airy Minimal Hero + Spotlight Search */}
-            <section className="mx-auto max-w-3xl text-center space-y-5">
-              <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">
+            <section className="mx-auto max-w-3xl text-center space-y-4 sm:space-y-5">
+              <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">
                 {t.hero.titlePrefix}{' '}
                 <span className="bg-gradient-to-r from-[#0071E3] via-[#AF52DE] to-[#FF2D55] bg-clip-text text-transparent">
                   {t.hero.titleAccent}
                 </span>
               </h1>
-              <p className="text-base sm:text-lg text-[#6E6E73] dark:text-[#98989D] leading-relaxed">
+              <p className="text-sm sm:text-lg text-[#6E6E73] dark:text-[#98989D] leading-relaxed">
                 {t.hero.subtitle}
               </p>
 
-              {/* Minimal Spotlight Search Input with Iridescent Accent */}
+              {/* Minimal Spotlight Search Input (16px text prevents iOS Safari zoom) */}
               <div className="relative mx-auto max-w-2xl rounded-2xl bg-gradient-to-r from-[#00C7BE]/50 via-[#AF52DE]/50 to-[#FF9500]/50 p-[1.5px] shadow-[0_8px_28px_-10px_rgba(175,82,222,0.28)] transition focus-within:from-[#0071E3] focus-within:via-[#AF52DE] focus-within:to-[#FF2D55]">
-                <div className="relative flex items-center rounded-[14.5px] bg-white dark:bg-[#1C1C1E] px-3 py-1.5">
+                <div className="relative flex items-center rounded-[14.5px] bg-white dark:bg-[#1C1C1E] px-2.5 py-1.5 sm:px-3">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0071E3] via-[#AF52DE] to-[#FF2D55] text-white shadow-xs">
                     <Search className="h-4 w-4" />
                   </div>
@@ -558,13 +560,13 @@ export default function AppleApp() {
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     placeholder={t.filters.searchPlaceholder}
-                    className="w-full bg-transparent py-2 pl-3 pr-16 text-[15px] text-[#1D1D1F] dark:text-[#F5F5F7] placeholder:text-[#86868B] focus:outline-none"
+                    className="w-full bg-transparent py-2 pl-3 pr-10 sm:pr-16 text-[16px] sm:text-[15px] text-[#1D1D1F] dark:text-[#F5F5F7] placeholder:text-[#86868B] focus:outline-none"
                   />
                   {searchInput ? (
                     <button
                       type="button"
                       onClick={() => setSearchInput('')}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 rounded-full bg-[#FFEAF0] dark:bg-[#FF375F]/20 p-1 text-[#FF2D55] dark:text-[#FF6482] hover:bg-[#FF2D55] hover:text-white transition cursor-pointer"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-[#FFEAF0] dark:bg-[#FF375F]/20 p-1.5 text-[#FF2D55] dark:text-[#FF6482] hover:bg-[#FF2D55] hover:text-white transition cursor-pointer"
                     >
                       <X className="h-3.5 w-3.5" />
                     </button>
@@ -576,75 +578,79 @@ export default function AppleApp() {
                 </div>
               </div>
 
-              {/* Clean Segmented Type Control + Filters + Lecturer Actions */}
-              <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
-                <div className="inline-flex flex-wrap items-center gap-1 rounded-full bg-[#E8E8ED]/80 dark:bg-[#1C1C1E] p-1 text-xs font-medium ring-1 ring-transparent dark:ring-white/[0.08]">
-                  {(
-                    [
-                      { id: '', label: t.filters.allTypes },
-                      { id: 'book', label: t.filters.books },
-                      { id: 'article', label: t.filters.articles },
-                      { id: 'recording', label: t.filters.recordings },
-                      { id: 'video', label: t.filters.videos },
-                    ] as const
-                  ).map(({ id, label }) => (
-                    <button
-                      key={id || 'all'}
-                      type="button"
-                      onClick={() => setTypeFilter(id)}
-                      className={`rounded-full px-3.5 py-1.5 transition cursor-pointer ${
-                        typeFilter === id
-                          ? 'bg-white dark:bg-[#3A3A3C] text-[#1D1D1F] dark:text-white shadow-xs'
-                          : 'text-[#6E6E73] dark:text-[#98989D] hover:text-[#1D1D1F] dark:hover:text-white'
-                      }`}
-                    >
-                      {label}
-                    </button>
-                  ))}
+              {/* Horizontally Scrollable Type Pills on Mobile + Filters + Lecturer Actions */}
+              <div className="flex flex-col items-center gap-2.5 pt-1">
+                <div className="w-full overflow-x-auto no-scrollbar pb-0.5">
+                  <div className="mx-auto inline-flex items-center gap-1 rounded-full bg-[#E8E8ED]/80 dark:bg-[#1C1C1E] p-1 text-xs font-medium ring-1 ring-transparent dark:ring-white/[0.08] whitespace-nowrap">
+                    {(
+                      [
+                        { id: '', label: t.filters.allTypes },
+                        { id: 'book', label: t.filters.books },
+                        { id: 'article', label: t.filters.articles },
+                        { id: 'recording', label: t.filters.recordings },
+                        { id: 'video', label: t.filters.videos },
+                      ] as const
+                    ).map(({ id, label }) => (
+                      <button
+                        key={id || 'all'}
+                        type="button"
+                        onClick={() => setTypeFilter(id)}
+                        className={`rounded-full px-3.5 py-1.5 transition cursor-pointer ${
+                          typeFilter === id
+                            ? 'bg-white dark:bg-[#3A3A3C] text-[#1D1D1F] dark:text-white shadow-xs'
+                            : 'text-[#6E6E73] dark:text-[#98989D] hover:text-[#1D1D1F] dark:hover:text-white'
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setShowFilters((v) => !v)}
-                  className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-xs font-medium transition cursor-pointer ${
-                    showFilters || activeFilterCount > 0
-                      ? 'border-[#0071E3] bg-[#0071E3] text-white'
-                      : 'border-black/[0.08] dark:border-white/[0.12] bg-white dark:bg-[#1C1C1E] text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-black/20 dark:hover:border-white/25'
-                  }`}
-                >
-                  <SlidersHorizontal className="h-3.5 w-3.5" />
-                  <span>{t.filters.filtersBtn}</span>
-                  {activeFilterCount > 0 && (
-                    <span className="rounded-full bg-white/25 px-1.5 text-[10px]">
-                      {activeFilterCount}
-                    </span>
-                  )}
-                </button>
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowFilters((v) => !v)}
+                    className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-xs font-medium transition cursor-pointer ${
+                      showFilters || activeFilterCount > 0
+                        ? 'border-[#0071E3] bg-[#0071E3] text-white'
+                        : 'border-black/[0.08] dark:border-white/[0.12] bg-white dark:bg-[#1C1C1E] text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-black/20 dark:hover:border-white/25'
+                    }`}
+                  >
+                    <SlidersHorizontal className="h-3.5 w-3.5" />
+                    <span>{t.filters.filtersBtn}</span>
+                    {activeFilterCount > 0 && (
+                      <span className="rounded-full bg-white/25 px-1.5 text-[10px]">
+                        {activeFilterCount}
+                      </span>
+                    )}
+                  </button>
 
-                {canCreate && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={handleSyncReel}
-                      disabled={syncingReel}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-black/[0.08] dark:border-white/[0.12] bg-white dark:bg-[#1C1C1E] px-3.5 py-2 text-xs font-medium text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-black/20 dark:hover:border-white/25 disabled:opacity-50 cursor-pointer"
-                    >
-                      <RefreshCw className={`h-3.5 w-3.5 ${syncingReel ? 'animate-spin' : ''}`} />
-                      {t.hero.syncReel}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEditingResource(null);
-                        setModalOpen(true);
-                      }}
-                      className="inline-flex items-center gap-1.5 rounded-full bg-[#0071E3] px-4 py-2 text-xs font-medium text-white hover:bg-[#0077ED] cursor-pointer"
-                    >
-                      <Plus className="h-3.5 w-3.5" />
-                      {t.hero.addResource}
-                    </button>
-                  </>
-                )}
+                  {canCreate && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={handleSyncReel}
+                        disabled={syncingReel}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-black/[0.08] dark:border-white/[0.12] bg-white dark:bg-[#1C1C1E] px-3.5 py-2 text-xs font-medium text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-black/20 dark:hover:border-white/25 disabled:opacity-50 cursor-pointer"
+                      >
+                        <RefreshCw className={`h-3.5 w-3.5 ${syncingReel ? 'animate-spin' : ''}`} />
+                        {t.hero.syncReel}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingResource(null);
+                          setModalOpen(true);
+                        }}
+                        className="inline-flex items-center gap-1.5 rounded-full bg-[#0071E3] px-4 py-2 text-xs font-medium text-white hover:bg-[#0077ED] cursor-pointer"
+                      >
+                        <Plus className="h-3.5 w-3.5" />
+                        {t.hero.addResource}
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
 
               {/* Expandable Filters Panel */}
@@ -1187,7 +1193,81 @@ export default function AppleApp() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#1C1C1E]">
+            {/* Mobile Depot Cards (< 768px) */}
+            <div className="space-y-3 md:hidden">
+              {physicalBooks.map((book) => {
+                const isBorrowedByMe = book.borrowed_by === currentUser.id;
+                const canReturn =
+                  book.available_copies < book.total_copies &&
+                  (isBorrowedByMe || currentUser.role === 'admin');
+                return (
+                  <div
+                    key={book.id}
+                    className="rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#1C1C1E] p-4 shadow-2xs space-y-3"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <a
+                          href={book.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-semibold text-[15px] text-[#1D1D1F] dark:text-[#F5F5F7] hover:text-[#0071E3]"
+                        >
+                          {book.title}
+                        </a>
+                        <p className="mt-0.5 text-xs text-[#86868B]">{book.author}</p>
+                      </div>
+                      <span className="shrink-0 rounded-lg bg-[#F5F5F7] dark:bg-[#2C2C2E] px-2 py-1 font-mono text-[11px] font-medium text-[#6E6E73] dark:text-[#AEAEB2]">
+                        {book.depot_shelf || t.depot.mainShelf}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-2 text-xs">
+                      <span className="inline-flex items-center gap-1.5 font-medium text-[#1D1D1F] dark:text-[#F5F5F7]">
+                        <span
+                          className={`h-2 w-2 rounded-full ${
+                            book.available_copies > 0 ? 'bg-[#34C759]' : 'bg-[#FF9500]'
+                          }`}
+                        />
+                        {book.available_copies}/{book.total_copies} {t.card.free}
+                      </span>
+                      {book.borrowed_by_name && (
+                        <span className="truncate text-[#6E6E73] dark:text-[#AEAEB2]">
+                          {book.borrowed_by_name}
+                          {book.due_date ? ` · ${book.due_date}` : ''}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex gap-2 pt-1">
+                      {book.available_copies > 0 && !isBorrowedByMe && (
+                        <button
+                          type="button"
+                          onClick={() => handleBorrow(book.id)}
+                          className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-[#0071E3] py-2 text-xs font-medium text-white active:scale-[0.98] transition cursor-pointer"
+                        >
+                          <BookmarkCheck className="h-3.5 w-3.5" />
+                          {t.card.borrow}
+                        </button>
+                      )}
+                      {canReturn && (
+                        <button
+                          type="button"
+                          onClick={() => handleReturn(book.id)}
+                          className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full border border-black/15 dark:border-white/20 bg-white dark:bg-[#2C2C2E] py-2 text-xs font-medium text-[#1D1D1F] dark:text-white active:scale-[0.98] transition cursor-pointer"
+                        >
+                          <RotateCcw className="h-3.5 w-3.5" />
+                          {t.card.return}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Desktop Depot Table (>= 768px) */}
+            <div className="hidden md:block overflow-hidden rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#1C1C1E]">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
                   <thead className="border-b border-black/[0.06] dark:border-white/[0.08] bg-[#FAFAFC] dark:bg-[#161618] text-[11px] font-medium uppercase tracking-wider text-[#86868B]">
@@ -1275,6 +1355,43 @@ export default function AppleApp() {
           </div>
         )}
       </main>
+
+      {/* Native iOS-Style Bottom Tab Bar for Mobile (< 768px) */}
+      <nav
+        aria-label="Mobile Navigation"
+        className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-black/[0.08] dark:border-white/[0.1] bg-white/85 dark:bg-[#161618]/90 backdrop-blur-2xl pb-[env(safe-area-inset-bottom)]"
+      >
+        <div className="grid grid-cols-4 px-2 py-1.5">
+          {(
+            [
+              { id: 'catalogue', label: t.nav.catalogue, icon: Library },
+              { id: 'collections', label: t.nav.collections, icon: FolderKanban },
+              { id: 'skill-map', label: t.nav.skillMap, icon: Compass },
+              { id: 'depot', label: t.nav.depot, icon: Building2 },
+            ] as const
+          ).map(({ id, label, icon: Icon }) => {
+            const isActive = activeTab === id;
+            return (
+              <button
+                key={id}
+                type="button"
+                onClick={() => {
+                  setActiveTab(id);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`flex flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 text-[10px] font-medium transition cursor-pointer ${
+                  isActive
+                    ? 'text-[#0071E3] dark:text-[#0A84FF]'
+                    : 'text-[#86868B] dark:text-[#98989D]'
+                }`}
+              >
+                <Icon className={`h-5 w-5 ${isActive ? 'stroke-[2.3]' : 'stroke-[1.8]'}`} />
+                <span className="truncate max-w-[78px]">{label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
 
       {modalOpen && (
         <Suspense fallback={null}>

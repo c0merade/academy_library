@@ -75,15 +75,17 @@ export function UserMenu({ users, currentUser, lang, onSelect }: UserMenuProps) 
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label="Active User Role"
-        className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] dark:border-white/[0.14] bg-white dark:bg-[#242428] py-1 pl-1.5 pr-3 text-xs font-medium text-[#1D1D1F] dark:text-[#F5F5F7] shadow-2xs transition hover:border-black/20 dark:hover:border-white/30 cursor-pointer"
+        className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-black/[0.08] dark:border-white/[0.14] bg-white dark:bg-[#242428] py-1 pl-1.5 pr-2.5 sm:pr-3 text-xs font-medium text-[#1D1D1F] dark:text-[#F5F5F7] shadow-2xs transition hover:border-black/20 dark:hover:border-white/30 cursor-pointer"
       >
         <span
           className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br text-[10px] font-bold shadow-2xs ${currentStyle.avatar}`}
         >
           {getInitials(currentUser.name)}
         </span>
-        <span className="max-w-[120px] truncate font-semibold">{currentUser.name}</span>
-        <span className={`hidden sm:inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold ${currentStyle.badge}`}>
+        <span className="hidden sm:inline max-w-[120px] truncate font-semibold">
+          {currentUser.name}
+        </span>
+        <span className={`hidden md:inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold ${currentStyle.badge}`}>
           {t.roles[currentUser.role]}
         </span>
         <ChevronDown
@@ -97,7 +99,7 @@ export function UserMenu({ users, currentUser, lang, onSelect }: UserMenuProps) 
       {open && (
         <div
           role="listbox"
-          className="absolute right-0 mt-2 w-72 origin-top-right overflow-hidden rounded-2xl border border-black/[0.08] dark:border-white/[0.12] bg-white/95 dark:bg-[#1C1C1E]/95 p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.16)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl z-50 animate-fade-up"
+          className="absolute right-0 mt-2 w-72 max-w-[calc(100vw-2rem)] origin-top-right overflow-hidden rounded-2xl border border-black/[0.08] dark:border-white/[0.12] bg-white/95 dark:bg-[#1C1C1E]/95 p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.16)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl z-50 animate-fade-up"
         >
           <div className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-[#86868B] dark:text-[#98989D]">
             {lang === 'hy' ? 'Ընտրել հաշիվը և դերը' : 'Switch Account & Role'}
