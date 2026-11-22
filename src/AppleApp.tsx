@@ -38,17 +38,12 @@ type Tab = 'catalogue' | 'collections' | 'skill-map' | 'depot';
 
 function MinimalLogo() {
   return (
-    <svg viewBox="0 0 40 44" className="h-7 w-6 shrink-0" aria-hidden="true" fill="none">
-      <path
-        d="M20 3L4.5 10.5C3.6 10.95 3 11.88 3 12.9V30.1C3 31.12 3.6 32.05 4.5 32.5L20 27V3Z"
-        fill="#64FCE5"
-      />
-      <path
-        d="M20 3L35.5 10.5C36.4 10.95 37 11.88 37 12.9V30.1C37 31.12 36.4 32.05 35.5 32.5L20 27V3Z"
-        fill="#D900D6"
-      />
-      <path d="M4.5 32.5L20 26.8L35.5 32.5L20 40.5L4.5 32.5Z" fill="#1D1D1F" />
-    </svg>
+    <img
+      src="/logo.svg"
+      alt="Picsart Academy"
+      className="h-8 w-8 shrink-0 object-contain"
+      draggable={false}
+    />
   );
 }
 

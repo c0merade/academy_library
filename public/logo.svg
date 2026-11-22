@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Bottom black face -->
+  <path
+    d="M11 97.5 L64 85 L117 97.5 Q115.2 100.8 111 102.2 L67.5 114.6 Q64 115.6 60.5 114.6 L17 102.2 Q12.8 100.8 11 97.5 Z"
+    fill="#09080F"
+  />
+  <!-- Left cyan face -->
+  <path
+    d="M64 12 L15.5 23.2 C10.2 24.4 7 28.8 7 34.2 L7 91.5 C7 96.8 10.6 100.6 15.8 99.4 L64 87.2 Z"
+    fill="#71FEEA"
+  />
+  <!-- Right magenta face -->
+  <path
+    d="M64 12 L112.5 23.2 C117.8 24.4 121 28.8 121 34.2 L121 91.5 C121 96.8 117.4 100.6 112.2 99.4 L64 87.2 Z"
+    fill="#D300C6"
+  />
+  <!-- Isometric white "Picsart Academy" wordmark on right face -->
+  <g transform="translate(68.5, 67.5) skewY(13)">
+    <text
+      x="0"
+      y="0"
+      fill="#FFFFFF"
+      font-family="'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+      font-size="10.2"
+      font-weight="700"
+      letter-spacing="-0.15"
+    >Picsart</text>
+    <text
+      x="0"
+      y="11.4"
+      fill="#FFFFFF"
+      font-family="'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+      font-size="10.2"
+      font-weight="700"
+      letter-spacing="-0.15"
+    >Academy</text>
+  </g>
+</svg>
